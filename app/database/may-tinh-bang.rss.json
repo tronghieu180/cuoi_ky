@@ -3327,28 +3327,28 @@
             }
         ],
         "link": "https://mobilecity.vn/may-tinh-bang",
-        "published": "Tue, 13 May 25 23:03:27 +0700",
+        "published": "Wed, 14 May 25 10:22:01 +0700",
         "published_parsed": [
             2025,
             5,
-            13,
-            16,
+            14,
             3,
-            27,
+            22,
             1,
-            133,
+            2,
+            134,
             0
         ],
-        "updated": "Tue, 13 May 25 23:03:27 +0700",
+        "updated": "Wed, 14 May 25 10:22:01 +0700",
         "updated_parsed": [
             2025,
             5,
-            13,
-            16,
+            14,
             3,
-            27,
+            22,
             1,
-            133,
+            2,
+            134,
             0
         ]
     },
@@ -3358,8 +3358,8 @@
         "transfer-encoding": "chunked",
         "connection": "close",
         "cache-control": "no-cache, private",
-        "date": "Tue, 13 May 2025 16:03:27 GMT",
-        "set-cookie": "laravel_session=eyJpdiI6IlRmMEpEcVY4dWZjYllnRlhUc0U2c0E9PSIsInZhbHVlIjoia2NuVGFtMFNXMWxQVk1rOG9IOVRiZlwvOUZ6RGxsb216ZndvYmwyTVI5REplWWhIQ0d0ZkFUTk1Ta08wZlplUVFHZU1uaUNOK0tyS3hxMlJHZ1dlN1VuOUU0Vkw4R3FxZ1wvUWRReEl2QTFka3M4ekE2TCtzemVjUzF5SlVBUWluYSIsIm1hYyI6IjIyZjUyNjJjNTQwNmRhNzY3MTFmYjc0NTQ4MWNlM2IxM2JhMDZiZWM5MjY4OGZlMGQ4YTgzNzllYTJjNTU2MmQifQ%3D%3D; expires=Thu, 12-Jun-2025 16:03:27 GMT; Max-Age=2592000; path=/; httponly"
+        "date": "Wed, 14 May 2025 03:22:01 GMT",
+        "set-cookie": "laravel_session=eyJpdiI6Im5PbkR4eXhhbkJKK25UYUh3bHhGc2c9PSIsInZhbHVlIjoiRDkwemZ4ZjZEaTc5NElWU25MVWRYVDNVRlBEbllYbndQNG9BMFJMQXBkYk40eHByR29UV1JaKzB4YlAxUGptM1wvWktEYTJiVGo0YXY1ZE4rSUlZR1V1bllqUlBjMmZyMVE1TERHNEUzbzJ5K0dTd3VFRjdFcmE2ZTFxQkZyR204IiwibWFjIjoiNjA2MTExZmY5YzRjMjc3ODY3NTg5NmIyYWQxYjY4YThiY2M0N2RjMmE3ZmJlZmFhY2E2MmUyNzNjMTFjYWYyNiJ9; expires=Fri, 13-Jun-2025 03:22:01 GMT; Max-Age=2592000; path=/; httponly"
     },
     "href": "https://mobilecity.vn/rss/may-tinh-bang.rss",
     "status": 200,

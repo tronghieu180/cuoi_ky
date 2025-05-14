@@ -53029,28 +53029,28 @@
             }
         ],
         "link": "https://mobilecity.vn/phu-kien",
-        "published": "Tue, 13 May 25 23:03:27 +0700",
+        "published": "Wed, 14 May 25 10:22:01 +0700",
         "published_parsed": [
             2025,
             5,
-            13,
-            16,
+            14,
             3,
-            27,
+            22,
             1,
-            133,
+            2,
+            134,
             0
         ],
-        "updated": "Tue, 13 May 25 23:03:27 +0700",
+        "updated": "Wed, 14 May 25 10:22:01 +0700",
         "updated_parsed": [
             2025,
             5,
-            13,
-            16,
+            14,
             3,
-            27,
+            22,
             1,
-            133,
+            2,
+            134,
             0
         ]
     },
@@ -53060,8 +53060,8 @@
         "transfer-encoding": "chunked",
         "connection": "close",
         "cache-control": "no-cache, private",
-        "date": "Tue, 13 May 2025 16:03:28 GMT",
-        "set-cookie": "laravel_session=eyJpdiI6InRRc2hSbEFJOUlwWjNsejFnb1wvajF3PT0iLCJ2YWx1ZSI6ImNVQTVEOVBnYlZpdWd0U0hKNGJhUnNta1F4bDVxMWpmc3UxbGphQWQxYXE0OUdaS1FndmhuSCtKTzhQQ1RmV0RQWXp6V3YzVHIzVlhvcWdIMkJJWEtYeXJRclF4SVBUYVwvQ1VnZE5jbTRoY0dlRllaR1lNWXZpN2RaeDNzZXVoeSIsIm1hYyI6IjY2N2NlYTNjNDYwNTE2ZDhmYjVjODkyYzFhMWE3ZWVkZjFmNDY2Y2M3ODM3OGViOTM1MzU3M2E0ZGJkMWJkZWMifQ%3D%3D; expires=Thu, 12-Jun-2025 16:03:28 GMT; Max-Age=2592000; path=/; httponly"
+        "date": "Wed, 14 May 2025 03:22:01 GMT",
+        "set-cookie": "laravel_session=eyJpdiI6ImdHVDFxeDlyNGVKU0RpZXdmMHBlZEE9PSIsInZhbHVlIjoiZGtkVGFBT0tLVEhWZ21GN3VnaEdycnY4ejZFcEFMNGZGdlE1ellkNklzaHNXS21WQkVNQTAyUE14ekRZTG9VUW5BMDBZenpmeTBXYkk3TEhOM0xJRHpCUHRvaHhCOXVxN0cwRmd6RlU5SEhoVE9QTFVMU2c0cmxnM0hzUHgreEciLCJtYWMiOiIxYTIzYjViYTU2YjFlNTZlZDczNWRmYWUzOGRlM2VlZDVkMzcyYTZjZjBhZmIwZWM2NjA4MTg4OTZiOTE1ZWJkIn0%3D; expires=Fri, 13-Jun-2025 03:22:01 GMT; Max-Age=2592000; path=/; httponly"
     },
     "href": "https://mobilecity.vn/rss/phu-kien.rss",
     "status": 200,

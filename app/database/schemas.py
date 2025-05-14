@@ -4,7 +4,7 @@ from typing import Optional
 # Schema cho bảng phones
 class PhoneBase(BaseModel):
     title: Optional[str] = None
-    link: Optional[str] = None
+    link: str
     image_link: Optional[str] = None
     price: Optional[str] = None
     category: Optional[str] = None
@@ -16,8 +16,6 @@ class PhoneBase(BaseModel):
     mau_sac: Optional[str] = None
 
 class PhoneSearch(PhoneBase):
-    id: Optional[int] = None
-
     class Config:
         orm_mode = True
 
@@ -27,12 +25,10 @@ class TabletDeviceBase(BaseModel):
     price: Optional[str] = None
     stock: Optional[str] = None
     category: Optional[str] = None
-    link: Optional[str] = None
+    link: str  
     image_link: Optional[str] = None
 
 class TabletDeviceSearch(TabletDeviceBase):
-    id: Optional[int] = None
-
     class Config:
         orm_mode = True
 
@@ -42,11 +38,9 @@ class AccessoryBase(BaseModel):
     price: Optional[str] = None
     stock: Optional[str] = None
     category: Optional[str] = None
-    link: Optional[str] = None
+    link: str  
     image_link: Optional[str] = None
 
 class AccessorySearch(AccessoryBase):
-    id: Optional[int] = None
-
     class Config:
         orm_mode = True

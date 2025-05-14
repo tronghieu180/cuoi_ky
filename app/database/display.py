@@ -13,9 +13,8 @@ def display_data():
         if phones:
             print("Dữ liệu trong bảng Phones (10 dòng đầu):")
             for phone in phones:
-                print(f"ID: {phone.id}")
+                print(f"Link (ID): {phone.link}")  # Changed from phone.id to phone.link
                 print(f"Title: {phone.title}")
-                print(f"Link: {phone.link}")
                 print(f"Image Link: {phone.image_link}")
                 print(f"Price: {phone.price}")
                 print(f"Category: {phone.category}")
@@ -31,9 +30,8 @@ def display_data():
         if tablets:
             print("Dữ liệu trong bảng TabletDevice (10 dòng đầu):")
             for tablet in tablets:
-                print(f"ID: {tablet.id}")
+                print(f"Link (ID): {tablet.link}")  # Changed from tablet.id to tablet.link
                 print(f"Title: {tablet.title}")
-                print(f"Link: {tablet.link}")
                 print(f"Image Link: {tablet.image_link}")
                 print(f"Price: {tablet.price}")
                 print(f"Category: {tablet.category}")
@@ -44,9 +42,8 @@ def display_data():
         if accessories:
             print("Dữ liệu trong bảng Accessory (10 dòng đầu):")
             for accessory in accessories:
-                print(f"ID: {accessory.id}")
+                print(f"Link (ID): {accessory.link}")  # Changed from accessory.id to accessory.link
                 print(f"Title: {accessory.title}")
-                print(f"Link: {accessory.link}")
                 print(f"Image Link: {accessory.image_link}")
                 print(f"Price: {accessory.price}")
                 print(f"Category: {accessory.category}")
