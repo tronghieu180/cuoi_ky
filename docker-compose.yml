@@ -1,0 +1,35 @@
+name: mobilecity-crawler
+services:
+  crawler:
+    build:
+      dockerfile: Dockerfile
+      context: ./crawler
+    expose:
+      - 8000
+    volumes:
+      - ./crawler:/app:ro
+      - ./landing_zone:/landing_zone
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+
+  ingestion:
+    build:
+      dockerfile: Dockerfile
+      context: ./ingestion
+    expose:
+      - 8000
+    volumes:
+      - ./ingestion:/app:ro
+      - ./landing_zone:/landing_zone
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - crawler
+      - ingestion
