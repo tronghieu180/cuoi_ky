@@ -7,7 +7,7 @@ from app.routes import api
 def get_application():
     models.Base.metadata.create_all(bind=engine)
     app = FastAPI(
-        root_path="/db-api",
+        root_path="/db",
         docs_url="/docs",
         openapi_url="/openapi.json"
     )
