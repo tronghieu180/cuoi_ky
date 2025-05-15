@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String
-from sqlalchemy.ext.declarative import declarative_base
 from database import Base
 
 class Phone(Base):
@@ -10,9 +9,8 @@ class Phone(Base):
     price = Column(String)
     category = Column(String)
     price_hn = Column(String)
-    price_dn = Column(String)
-    stock_hn = Column(String)
-    stock_dn = Column(String)
+    price_hcm = Column(String)  # Đảm bảo có price_hcm
+    price_dn = Column(String)   # Giữ price_dn
     dung_luong = Column(String)
     mau_sac = Column(String)
 
@@ -23,7 +21,6 @@ class TabletDevice(Base):
     image_link = Column(String)
     price = Column(String)
     category = Column(String)
-    stock = Column(String)
 
 class Accessory(Base):
     __tablename__ = "accessories"
@@ -32,4 +29,3 @@ class Accessory(Base):
     image_link = Column(String)
     price = Column(String)
     category = Column(String)
-    stock = Column(String)

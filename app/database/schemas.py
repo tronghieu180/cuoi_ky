@@ -9,9 +9,8 @@ class PhoneBase(BaseModel):
     price: Optional[str] = None
     category: Optional[str] = None
     price_hn: Optional[str] = None
-    price_dn: Optional[str] = None
-    stock_hn: Optional[str] = None
-    stock_dn: Optional[str] = None
+    price_hcm: Optional[str] = None  # Thêm price_hcm
+    price_dn: Optional[str] = None   # Đảm bảo giữ price_dn
     dung_luong: Optional[str] = None
     mau_sac: Optional[str] = None
 
@@ -23,7 +22,6 @@ class PhoneSearch(PhoneBase):
 class TabletDeviceBase(BaseModel):
     title: Optional[str] = None
     price: Optional[str] = None
-    stock: Optional[str] = None
     category: Optional[str] = None
     link: str  
     image_link: Optional[str] = None
@@ -36,7 +34,6 @@ class TabletDeviceSearch(TabletDeviceBase):
 class AccessoryBase(BaseModel):
     title: Optional[str] = None
     price: Optional[str] = None
-    stock: Optional[str] = None
     category: Optional[str] = None
     link: str  
     image_link: Optional[str] = None
