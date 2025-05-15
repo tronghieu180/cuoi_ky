@@ -92,10 +92,10 @@ class CrawlerService:
     
     @staticmethod
     async def crawl():
-        result = await asyncio.gather(
+        results = await asyncio.gather(
             CrawlerService.crawl_phones(),
             CrawlerService.crawl_tablets(),
             CrawlerService.crawl_accessories()
         )
 
-        return result
+        return results
