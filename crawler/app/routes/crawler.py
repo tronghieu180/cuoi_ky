@@ -5,4 +5,5 @@ router = APIRouter()
 
 @router.get("/crawl")
 async def crawl():
-    return CrawlerService.crawl()
+    result = await CrawlerService.crawl()
+    return result

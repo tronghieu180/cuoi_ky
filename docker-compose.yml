@@ -1,5 +1,36 @@
-name: mobilecity-crawler
+name: mobilecity-searching
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  db-api:
+    build:
+      dockerfile: Dockerfile
+      context: ./db-api
+    volumes:
+      - ./db-api:/app:ro
+    expose:
+      - 8000
+    environment:
+      - DB_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      - TZ=Asia/Ho_Chi_Minh
+    depends_on:
+      db:
+        condition: service_healthy
+
   crawler:
     build:
       dockerfile: Dockerfile
@@ -33,3 +64,7 @@ services:
     depends_on:
       - crawler
       - ingestion
+      - db-api
+
+volumes:
+  postgres_data:
