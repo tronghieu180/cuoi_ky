@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -8,7 +9,9 @@ from app.services.crawler_service import CrawlerService
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(CrawlerService.crawl, "cron", hour=0, minute=0, id="crawl")
+    hour = os.getenv("CRAWL_HOUR")
+    minute = os.getenv("CRAWL_MINUTE")
+    scheduler.add_job(CrawlerService.crawl, "cron", hour=hour, minute=minute, id="crawl")
     scheduler.start()
     yield
     scheduler.shutdown()

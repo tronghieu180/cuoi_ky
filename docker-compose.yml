@@ -41,6 +41,8 @@ services:
       - ./crawler:/app:ro
       - ./landing_zone:/landing_zone
     environment:
+      - CRAWL_HOUR=${CRAWL_HOUR}
+      - CRAWL_MINUTE=${CRAWL_MINUTE}
       - TZ=Asia/Ho_Chi_Minh
 
   ingestion:
