@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy.dialects.postgresql import insert
 from typing import Dict, List, Any
+from collections import defaultdict
 from app.database.models import Phone, TabletDevice, Accessory
 from app.database.database import get_db
 from app.database.schemas import PhoneSearch, TabletDeviceSearch, AccessorySearch
@@ -130,3 +131,57 @@ def search_accessories(query: str, db: Session = Depends(get_db)):
         Accessory.title.ilike(f"%{query}%") |
         Accessory.category.ilike(f"%{query}%")
     ).all()
+    
+@router.get("/search_phones_grouped", response_model=Dict[str, List[PhoneSearch]])
+def search_phones_grouped(query: str, db: Session = Depends(get_db)):
+    results = db.query(Phone).filter(
+        Phone.title.ilike(f"%{query}%") |
+        Phone.category.ilike(f"%{query}%")
+    ).all()
+
+    grouped_results = defaultdict(list)
+    for phone in results:
+        grouped_results[phone.category].append(phone)
+
+    return grouped_results
+
+@router.get("/search_tabletdevices_grouped", response_model=Dict[str, List[TabletDeviceSearch]])
+def search_tabletdevices_grouped(query: str, db: Session = Depends(get_db)):
+    results = db.query(TabletDevice).filter(
+        TabletDevice.title.ilike(f"%{query}%") |
+        TabletDevice.category.ilike(f"%{query}%")
+    ).all()
+
+    grouped_results = defaultdict(list)
+    for tabletdevice in results:
+        grouped_results[tabletdevice.category].append(tabletdevice)
+
+    return grouped_results
+
+@router.get("/search_accessories_grouped", response_model=Dict[str, List[AccessorySearch]])
+def search_accessories_grouped(query: str, db: Session = Depends(get_db)):
+    results = db.query(Accessory).filter(
+        Accessory.title.ilike(f"%{query}%") |
+        Accessory.category.ilike(f"%{query}%")
+    ).all()
+
+    grouped_results = defaultdict(list)
+    for accessory in results:
+        grouped_results[accessory.category].append(accessory)
+
+    return grouped_results
+
+@router.get("/phone_categories", response_model=List[str])
+def get_phone_categories(db: Session = Depends(get_db)):
+    categories = db.query(Phone.category).distinct().all()
+    return [c[0] for c in categories]
+
+@router.get("/tabletdevice_categories", response_model=List[str])
+def get_tabletdevice_categories(db: Session = Depends(get_db)):
+    categories = db.query(TabletDevice.category).distinct().all()
+    return [c[0] for c in categories]
+
+@router.get("/accessory_categories", response_model=List[str])
+def get_accessory_categories(db: Session = Depends(get_db)):
+    categories = db.query(Accessory.category).distinct().all()
+    return [c[0] for c in categories]
