@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'"]
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${DB_USER} -d ${DB_NAME}'" ]
       interval: 10s
       timeout: 3s
       retries: 3
@@ -68,5 +68,20 @@ services:
       - ingestion
       - db-api
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host --port 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db-api
+    environment:
+      - VITE_API_URL=http://localhost:8000
 volumes:
   postgres_data:

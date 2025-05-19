@@ -41,3 +41,12 @@ class AccessoryBase(BaseModel):
 class AccessorySearch(AccessoryBase):
     class Config:
         orm_mode = True
+
+
+class SearchResult(BaseModel):
+    type: str 
+    title: Optional[str]
+    link: str
+    image_link: Optional[str]
+    price: Optional[str] = None  
+    category: Optional[str]
