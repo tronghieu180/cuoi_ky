@@ -30,8 +30,6 @@ export default function SearchProducts() {
   const clearFilters = () => {
     setFilters({ type: "", category: "", minPrice: "", maxPrice: "" });
     setSortConfig({ field: "", direction: "" });
-    setFilteredProducts(results); // Reset filteredProducts về results gốc
-    setCurrentPage(1);
   };
 
   const search = async () => {
@@ -43,11 +41,9 @@ export default function SearchProducts() {
       if (!res.ok) throw new Error(`Error: ${res.status}`);
       const data = await res.json();
       setResults(data);
-      setFilteredProducts(data); // Hiển thị toàn bộ kết quả tìm kiếm ban đầu
     } catch (err) {
       setError(err.message || "Lỗi khi tìm kiếm");
       setResults([]);
-      setFilteredProducts([]);
     } finally {
       setLoading(false);
     }
@@ -71,22 +67,23 @@ export default function SearchProducts() {
     setCurrentPage(1);
   };
 
-  // Chỉ gọi applyFilters khi filters hoặc sortConfig thay đổi
   useEffect(() => {
-    if (filters.type || filters.category || filters.minPrice || filters.maxPrice || sortConfig.field) {
-      applyFilters();
-    }
-  }, [filters, sortConfig]);
-
-  // Tìm kiếm lần đầu khi component được mount
-  useEffect(() => {
-    search();
-  }, []);
+    applyFilters();
+  }, [results, filters, sortConfig]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     search();
   };
+
+  useEffect(() => {
+    search();
+  }, []);
+
+
+
+
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -164,13 +161,6 @@ export default function SearchProducts() {
               <BsSortDown />
             )}
             Sắp xếp theo giá
-          </button>
-
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            onClick={applyFilters}
-          >
-            Áp dụng bộ lọc
           </button>
 
           <button
