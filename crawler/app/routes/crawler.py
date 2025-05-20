@@ -1,7 +1,10 @@
 from fastapi import APIRouter
+
 from app.services.crawler_service import CrawlerService
 
-router = APIRouter()
+router = APIRouter(
+    tags=["crawler"]
+)
 
 @router.get("/crawl")
 async def crawl():

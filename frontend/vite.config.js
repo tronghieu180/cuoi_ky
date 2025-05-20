@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/db/search': 'http://localhost:8080',
-    }
+    },
+    
   },
   plugins: [react()]
 })

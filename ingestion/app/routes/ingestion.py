@@ -1,7 +1,10 @@
 from fastapi import APIRouter
+
 from app.services.ingestion_service import IngestionService
 
-router = APIRouter()
+router = APIRouter(
+    tags=["ingestion"]
+)
 
 @router.post("/phone")
 async def ingest(payload: dict):

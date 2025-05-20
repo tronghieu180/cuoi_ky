@@ -1,13 +1,19 @@
-import feedparser
+import os
 import json
-import requests
 import asyncio
+import logging
 from datetime import datetime
+
+import feedparser
+import requests
+
 
 LANDING_ZONE_PATH = "/landing_zone"
 SMARTPHONE_RSS_URL = "https://mobilecity.vn/rss/dien-thoai.rss"
 TABLET_URL = "https://mobilecity.vn/rss/may-tinh-bang.rss"
 ACCESSORIES_URL = "https://mobilecity.vn/rss/phu-kien.rss"
+INGESTION_SERVICE_URL = os.getenv("INGESTION_SERVICE_URL")
+
 
 class CrawlerService:
     @staticmethod
@@ -18,7 +24,7 @@ class CrawlerService:
         with open(f"{LANDING_ZONE_PATH}/{file_name}", "w", encoding="utf-8") as f:
             json.dump(feed, f, indent=4, ensure_ascii=False)
 
-        requests.post("http://ingestion:8000/phone", json={"filename": file_name})
+        requests.post(f"{INGESTION_SERVICE_URL}/phone", json={"filename": file_name})
 
         return file_name
     
@@ -30,7 +36,7 @@ class CrawlerService:
         with open(f"{LANDING_ZONE_PATH}/{file_name}", "w", encoding="utf-8") as f:
             json.dump(feed, f, indent=4, ensure_ascii=False)
 
-        requests.post("http://ingestion:8000/tablet", json={"filename": file_name})
+        requests.post(f"{INGESTION_SERVICE_URL}/tablet", json={"filename": file_name})
 
         return file_name
 
@@ -42,16 +48,21 @@ class CrawlerService:
         with open(f"{LANDING_ZONE_PATH}/{file_name}", "w", encoding="utf-8") as f:
             json.dump(feed, f, indent=4, ensure_ascii=False)
 
-        requests.post("http://ingestion:8000/accessory", json={"filename": file_name})
+        requests.post(f"{INGESTION_SERVICE_URL}/accessory", json={"filename": file_name})
 
         return file_name
     
     @staticmethod
     async def crawl():
+        logging.basicConfig(level=logging.INFO)
+        logging.info("Start crawling")
+        
         results = await asyncio.gather(
             CrawlerService.crawl_phones(),
             CrawlerService.crawl_tablets(),
             CrawlerService.crawl_accessories()
         )
+
+        logging.info("Finished")
 
         return results

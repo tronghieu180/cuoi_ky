@@ -6,8 +6,8 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -43,6 +43,7 @@ services:
     environment:
       - CRAWL_HOUR=${CRAWL_HOUR}
       - CRAWL_MINUTE=${CRAWL_MINUTE}
+      - INGESTION_SERVICE_URL=http://ingestion:8000
       - TZ=Asia/Ho_Chi_Minh
 
   ingestion:
@@ -55,6 +56,7 @@ services:
       - ./ingestion:/app:ro
       - ./landing_zone:/landing_zone
     environment:
+      - DB_API_URL=http://db-api:8000
       - TZ=Asia/Ho_Chi_Minh
 
   nginx:
@@ -71,17 +73,19 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: frontend
     volumes:
+      # - ./frontend/src:/app/src
       - ./frontend:/app
       - /app/node_modules
-    command: npm run dev -- --host --port 3000
     ports:
-      - "3000:3000"
+      - 3000:80
     depends_on:
       - db-api
     environment:
+      - DB_API_URL=http://localhost:8080/db
       - VITE_API_URL=http://localhost:8000
+
 volumes:
   postgres_data:

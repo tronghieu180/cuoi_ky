@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiSearch, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { BsFilterLeft, BsSortUp, BsSortDown } from "react-icons/bs";
 
+const DB_API_URL = "http://localhost:8080/db";
 const ITEMS_PER_PAGE = 6;
 
 export default function SearchProducts() {
@@ -39,7 +40,7 @@ export default function SearchProducts() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:8080/db/search?keyword=${encodeURIComponent(actualKeyword)}`);
+      const res = await fetch(`${DB_API_URL}/search?keyword=${encodeURIComponent(actualKeyword)}`);
       if (!res.ok) throw new Error(`Error: ${res.status}`);
       const data = await res.json();
       setResults(data);

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from app.routes import api
 from app.services.ingestion_service import IngestionService
 
@@ -9,6 +10,7 @@ def get_application():
         docs_url="/docs",
         openapi_url="/openapi.json"
     )
+
     app.add_middleware(
         CORSMiddleware,
         allow_methods=["*"],
@@ -16,6 +18,7 @@ def get_application():
     )
 
     app.include_router(api.router)
+
     return app
 
 app = get_application()

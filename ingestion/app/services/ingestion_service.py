@@ -1,9 +1,11 @@
 import os
 import json
 import re
+
 import requests
 
 LANDING_ZONE_PATH = "/landing_zone"
+DB_API_URL = os.getenv("DB_API_URL")
 
 def extract_additional_info(description: str):
     price = None
@@ -80,7 +82,7 @@ class IngestionService:
                 })
         
         requests.post(
-            "http://db-api:8000/phone",
+            f"{DB_API_URL}/phone",
             json=data,
             headers={"Content-Type": "application/json"},
         )
@@ -92,7 +94,7 @@ class IngestionService:
         data = IngestionService.ingest_common(file_name, "tablet_devices")
 
         requests.post(
-            "http://db-api:8000/tablet",
+            f"{DB_API_URL}/tablet",
             json=data,
             headers={"Content-Type": "application/json"},
         )
@@ -104,7 +106,7 @@ class IngestionService:
         data = IngestionService.ingest_common(file_name, "accessories")
 
         requests.post(
-            "http://db-api:8000/accessory",
+            f"{DB_API_URL}/accessory",
             json=data,
             headers={"Content-Type": "application/json"},
         )
@@ -129,7 +131,7 @@ class IngestionService:
                 title = entry.get("title", "")
                 image_link = entry.get("image_link", "")
 
-                category = [tag["term"] for tag in entry.get("tags", []) if "term" in tag] or ["phones"]
+                category = [tag["term"] for tag in entry.get("tags", []) if "term" in tag] or [main_category]
 
                 price = entry.get("price", "0 VND")
                 price = 0 if price == "VND" else extract_money(price)
@@ -141,4 +143,5 @@ class IngestionService:
                     "category": category,
                     "price": price,
                 })
+        
         return data

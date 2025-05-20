@@ -1,15 +1,16 @@
-from fastapi import FastAPI, APIRouter, Query ,Depends
-from sqlalchemy.orm import Session
-from sqlalchemy import func
-from sqlalchemy.dialects.postgresql import insert
 from typing import Dict, List, Any
+
+from fastapi import FastAPI, APIRouter, Query ,Depends
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import func
+from sqlalchemy.orm import Session
+from sqlalchemy.dialects.postgresql import insert
+from unidecode import unidecode
+from rapidfuzz import fuzz
+
 from app.database.models import Phone, TabletDevice, Accessory
 from app.database.database import get_db
 from app.database.schemas import SearchResult
-from unidecode import unidecode
-from rapidfuzz import fuzz
-from fastapi.middleware.cors import CORSMiddleware
-
 
 
 app = FastAPI()
