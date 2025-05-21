@@ -4,6 +4,48 @@ import { BsFilterLeft, BsSortUp, BsSortDown } from "react-icons/bs";
 
 const ITEMS_PER_PAGE = 6;
 
+const typeOptions = [
+  { value: "", label: "Tất cả" },
+  { value: "phone", label: "Điện thoại" },
+  { value: "tablet", label: "Máy tính bảng" },
+];
+
+const categoryOptions = {
+  "": [{ value: "", label: "Tất cả" }],
+  phone: [
+    { value: "Điện thoại Cũ", label: "Điện thoại Cũ" },
+    { value: "Iphone Chính hãng VN/A", label: "Iphone Chính hãng VN/A" },
+    { value: "Iphone Cũ 99%", label: "Xiaomi" },
+	{ value: "Samsung Cũ", label: "Samsung Cũ" },
+	{ value: "Samsung Chính hãng", label: "Samsung Chính hãng" },
+	{ value: "Xiaomi", label: "Xiaomi" },
+	{ value: "POCO", label: "POCO" },
+	{ value: "Redmi", label: "Redmi" },
+	{ value: "Realme", label: "Realme" },
+	{ value: "Asus (ROG Phone)", label: "Asus (ROG Phone)" },
+	{ value: "OnePlus", label: "OnePlus" },
+	{ value: "Vivo", label: "Vivo" },
+	{ value: "Nokia", label: "Nokia" },
+	{ value: "LG", label: "LG" },
+	{ value: "Google", label: "Google" },
+	{ value: "OPPO", label: "OPPO" },
+	{ value: "Meizu", label: "Meizu" },
+	{ value: "Honor", label: "Honor" },
+	{ value: "Tecno", label: "Tecno" },
+	{ value: "Nubia Red Magic", label: "Nubia Red Magic" },
+	{ value: "Lenovo - Motorola", label: "Lenovo - Motorola" },
+  ],
+  tablet: [
+    { value: "iPad", label: "iPad" },
+	{ value: "Vivo Pad", label: "Vivo Pad" },
+	{ value: "Realme Pad", label: "Realme Pad" },
+	{ value: "Samsung Galaxy Tab", label: "Samsung Galaxy Tab" },
+	{ value: "OPPO Pad", label: "OPPO Pad" },
+	{ value: "Lenovo", label: "Lenovo" },
+	{ value: "Xiaomi Redmi Pad", label: "Xiaomi Redmi Pad" },
+  ],
+};
+
 export default function SearchProducts() {
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState([]);
@@ -66,6 +108,10 @@ export default function SearchProducts() {
     setFilteredProducts(filtered);
     setCurrentPage(1);
   };
+  
+  useEffect(() => {
+    setFilters((prev) => ({ ...prev, category: "" }));
+  }, [filters.type]);
 
   useEffect(() => {
     applyFilters();
@@ -113,24 +159,28 @@ export default function SearchProducts() {
       <div className={`${isFilterOpen ? "block" : "hidden md:block"}`}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <select
-            className="p-2 border rounded-lg"
+            className="p-2 border rounded-lg custom-select"
             value={filters.type}
             onChange={(e) => setFilters({ ...filters, type: e.target.value })}
           >
-            <option value="">Tất cả loại</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Furniture">Furniture</option>
+            {typeOptions.map((option) => (
+				<option key={option.value} value={option.value}>
+					{option.label}
+				</option>
+			))}
           </select>
 
           <select
-            className="p-2 border rounded-lg"
+            className="p-2 border rounded-lg custom-select"
             value={filters.category}
             onChange={(e) => setFilters({ ...filters, category: e.target.value })}
           >
-            <option value="">Tất cả danh mục</option>
-            <option value="Audio">Audio</option>
-            <option value="Office">Office</option>
-            <option value="Wearables">Wearables</option>
+            {categoryOptions[filters.type] &&
+				categoryOptions[filters.type].map((option) => (
+					<option key={option.value} value={option.value}>
+						{option.label}
+					</option>
+			))}
           </select>
 
           <input
