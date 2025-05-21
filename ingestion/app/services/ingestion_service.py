@@ -3,6 +3,7 @@ import json
 import re
 
 import requests
+import bleach
 
 LANDING_ZONE_PATH = "/landing_zone"
 DB_API_URL = os.getenv("DB_API_URL")
@@ -29,6 +30,12 @@ def extract_additional_info(description: str):
 def extract_money(value: str):
     return int(value.split()[0])
 
+def sanitize(value: str):
+    return bleach.clean(
+        value,
+        strip=True
+    )
+
 
 class IngestionService:
     @staticmethod
@@ -50,7 +57,7 @@ class IngestionService:
                 if not link:
                     continue
                 
-                title = entry.get("title", "")
+                title = sanitize(entry.get("title", ""))
                 summary = entry.get("summary", "")
                 image_link = entry.get("image_link", "")
 
@@ -128,7 +135,7 @@ class IngestionService:
                 if not link:
                     continue
 
-                title = entry.get("title", "")
+                title = sanitize(entry.get("title", ""))
                 image_link = entry.get("image_link", "")
 
                 category = [tag["term"] for tag in entry.get("tags", []) if "term" in tag] or [main_category]
