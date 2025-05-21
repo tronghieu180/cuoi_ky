@@ -184,7 +184,7 @@ export default function SearchProducts() {
           {paginatedProducts.map((item) => (
             <div
               key={item.id}
-              className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col"
             >
               <img
                 src={item.image_link}
@@ -192,23 +192,29 @@ export default function SearchProducts() {
                 className="w-full h-auto object-contain"
                 loading="lazy"
               />
-              <div className="p-4">
+              <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
                 <div className="flex justify-between text-sm text-gray-600">
-                  <span>{item.type === "phone" ? "Điện thoại" :
-                    item.type === "tablet" ? "Máy tính bảng" :
-                      item.type === "accessory" ? "Phụ kiện" :
-                        item.type
-                  }</span>
                   <span>{item.category}</span>
                 </div>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="text-green-600 font-bold">{Number(item.price).toLocaleString("vi-VN")} VNĐ</span>
+
+
+                <div className="flex justify-between items-center mt-auto pt-4">
+                  {item.price && Number(item.price) > 0 ? (
+                    <span className="text-green-600 font-bold">
+                      {Number(item.price).toLocaleString("vi-VN")} VNĐ
+                    </span>
+                  ) : (
+                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:text-green-500 hover:bg-white border hover:border-green-600">
+                      Liên hệ
+                    </button>
+                  )}
+
                   <a
                     href={item.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-500 underline"
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:text-green-500 hover:bg-white border hover:border-green-600"
                   >
                     Chi tiết
                   </a>
@@ -217,6 +223,7 @@ export default function SearchProducts() {
             </div>
           ))}
         </div>
+
       )}
 
       {totalPages > 1 && (
@@ -234,7 +241,7 @@ export default function SearchProducts() {
               disabled={currentPage === 1}
             >
               <FiChevronLeft />
-            </button>
+            </button >
 
             {[...Array(totalPages)].map((_, i) => i + 1)
               .filter((page) => {
@@ -259,7 +266,7 @@ export default function SearchProducts() {
                 ) : (
                   <button
                     key={item}
-                    className={`rounded-lg text-center   ${currentPage === item
+                    className={`p-2 rounded-lg text-center   ${currentPage === item
                       ? "bg-blue-500 text-white"
                       : "bg-gray-100 hover:bg-gray-200"
                       }`}
