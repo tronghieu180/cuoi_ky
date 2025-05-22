@@ -20,3 +20,7 @@ async def ingest(payload: dict):
 async def ingest(payload: dict):
     file_name = payload["filename"]
     return IngestionService.ingest_accessories(file_name)
+
+@router.post("/clean")
+async def ingest():
+    return IngestionService.remove_older_files()

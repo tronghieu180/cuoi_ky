@@ -9,9 +9,11 @@ import requests
 
 
 LANDING_ZONE_PATH = "/landing_zone"
+
 SMARTPHONE_RSS_URL = "https://mobilecity.vn/rss/dien-thoai.rss"
 TABLET_URL = "https://mobilecity.vn/rss/may-tinh-bang.rss"
 ACCESSORIES_URL = "https://mobilecity.vn/rss/phu-kien.rss"
+
 INGESTION_SERVICE_URL = os.getenv("INGESTION_SERVICE_URL")
 
 
@@ -64,5 +66,7 @@ class CrawlerService:
         )
 
         logging.info("Finished")
+
+        requests.post(f"{INGESTION_SERVICE_URL}/clean")
 
         return results

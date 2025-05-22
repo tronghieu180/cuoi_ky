@@ -1,4 +1,6 @@
 import os
+import time
+import logging
 import json
 import re
 
@@ -6,6 +8,7 @@ import requests
 import bleach
 
 LANDING_ZONE_PATH = "/landing_zone"
+MAX_FILE_AGE = int(os.getenv("LANDING_ZONE_MAX_FILE_AGE"))
 DB_API_URL = os.getenv("DB_API_URL")
 
 def extract_additional_info(description: str):
@@ -37,11 +40,7 @@ def sanitize(value: str):
     )
 
 
-class IngestionService:
-    @staticmethod
-    def ingest():
-        return "ok"
-    
+class IngestionService:    
     @staticmethod
     def ingest_phones(file_name):
         data = []
@@ -68,6 +67,9 @@ class IngestionService:
                 price_hn = extract_money(entry.get("price-hn", "0 VND"))
                 price_dn = extract_money(entry.get("price-dn", "0 VND"))
                 price_hcm = extract_money(entry.get("price-hcm", "0 VND"))
+                
+                if 0 not in [price_hn, price_dn, price_hcm]:
+                    price = price or next((p for p in [price_hn, price_dn, price_hcm] if p > 0), 0)
 
                 dung_luong = entry.get("dung-luong", None)
                 mau_sac = entry.get("mau-sac", None)
@@ -152,3 +154,20 @@ class IngestionService:
                 })
         
         return data
+    
+    @staticmethod
+    def remove_older_files():
+        now = time.time()
+        removed_files = []
+
+        logging.basicConfig(level=logging.INFO)
+        for file_name in os.listdir(LANDING_ZONE_PATH):
+            file_path = f"{LANDING_ZONE_PATH}/{file_name}"
+            if os.path.isfile(file_path):
+                file_age = now - os.path.getmtime(file_path)
+                if file_age > MAX_FILE_AGE:
+                    os.remove(file_path)
+                    removed_files.append(file_path)
+                    logging.info(f"Deleted: {file_path}")
+
+        return removed_files
