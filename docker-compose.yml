@@ -56,6 +56,7 @@ services:
       - ./ingestion:/app:ro
       - ./landing_zone:/landing_zone
     environment:
+      - LANDING_ZONE_MAX_FILE_AGE=${LANDING_ZONE_MAX_FILE_AGE}
       - DB_API_URL=http://db-api:8000
       - TZ=Asia/Ho_Chi_Minh
 
@@ -69,22 +70,25 @@ services:
       - crawler
       - ingestion
       - db-api
+      - frontend
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      # dockerfile: Dockerfile.dev
     container_name: frontend
-    volumes:
-      # - ./frontend/src:/app/src
-      - ./frontend:/app
-      - /app/node_modules
+    # volumes:
+    #   - ./frontend/src:/app/src
+      # - ./frontend:/app
+      # - /app/node_modules
+    expose:
+      - 3000
     ports:
-      - 3000:80
+      - "3000:3000"
     depends_on:
       - db-api
     environment:
-      - DB_API_URL=http://localhost:8080/db
       - VITE_API_URL=http://localhost:8000
 
 volumes:

@@ -6,52 +6,81 @@ const DB_API_URL = "http://localhost:8080/db";
 const ITEMS_PER_PAGE = 6;
 
 const typeOptions = [
-  { value: "", label: "Tất cả" },
+  { value: "all", label: "Tất cả" },
   { value: "phone", label: "Điện thoại" },
   { value: "tablet", label: "Máy tính bảng" },
+  { value: "accessory", label: "Phụ kiện" },
 ];
 
 const categoryOptions = {
-  "": [{ value: "", label: "Tất cả" }],
+  all: [
+    { value: "", label: "Tất cả" }
+  ],
   phone: [
+    { value: "", label: "Tất cả" },
     { value: "Điện thoại Cũ", label: "Điện thoại Cũ" },
-    { value: "Iphone Chính hãng VN/A", label: "Iphone Chính hãng VN/A" },
-    { value: "Iphone Cũ 99%", label: "Xiaomi" },
-	{ value: "Samsung Cũ", label: "Samsung Cũ" },
-	{ value: "Samsung Chính hãng", label: "Samsung Chính hãng" },
-	{ value: "Xiaomi", label: "Xiaomi" },
-	{ value: "POCO", label: "POCO" },
-	{ value: "Redmi", label: "Redmi" },
-	{ value: "Realme", label: "Realme" },
-	{ value: "Asus (ROG Phone)", label: "Asus (ROG Phone)" },
-	{ value: "OnePlus", label: "OnePlus" },
-	{ value: "Vivo", label: "Vivo" },
-	{ value: "Nokia", label: "Nokia" },
-	{ value: "LG", label: "LG" },
-	{ value: "Google", label: "Google" },
-	{ value: "OPPO", label: "OPPO" },
-	{ value: "Meizu", label: "Meizu" },
-	{ value: "Honor", label: "Honor" },
-	{ value: "Tecno", label: "Tecno" },
-	{ value: "Nubia Red Magic", label: "Nubia Red Magic" },
-	{ value: "Lenovo - Motorola", label: "Lenovo - Motorola" },
+    { value: "iPhone Chính hãng VN/A", label: "iPhone Chính hãng VN/A" },
+    { value: "iPhone Cũ 99%", label: "iPhone Cũ 99%" },
+    { value: "Samsung Cũ", label: "Samsung Cũ" },
+    { value: "Samsung Chính hãng", label: "Samsung Chính hãng" },
+    { value: "Xiaomi", label: "Xiaomi" },
+    { value: "POCO", label: "POCO" },
+    { value: "Redmi", label: "Redmi" },
+    { value: "Realme", label: "Realme" },
+    { value: "Asus (ROG Phone)", label: "Asus (ROG Phone)" },
+    { value: "OnePlus", label: "OnePlus" },
+    { value: "Vivo", label: "Vivo" },
+    { value: "Nokia", label: "Nokia" },
+    { value: "LG", label: "LG" },
+    { value: "Google", label: "Google" },
+    { value: "OPPO", label: "OPPO" },
+    { value: "Meizu", label: "Meizu" },
+    { value: "Honor", label: "Honor" },
+    { value: "Tecno", label: "Tecno" },
+    { value: "Nubia Red Magic", label: "Nubia Red Magic" },
+    { value: "Lenovo - Motorola", label: "Lenovo - Motorola" },
   ],
   tablet: [
+    { value: "", label: "Tất cả" },
     { value: "iPad", label: "iPad" },
-	{ value: "Vivo Pad", label: "Vivo Pad" },
-	{ value: "Realme Pad", label: "Realme Pad" },
-	{ value: "Samsung Galaxy Tab", label: "Samsung Galaxy Tab" },
-	{ value: "OPPO Pad", label: "OPPO Pad" },
-	{ value: "Lenovo", label: "Lenovo" },
-	{ value: "Xiaomi Redmi Pad", label: "Xiaomi Redmi Pad" },
+    { value: "Vivo Pad", label: "Vivo Pad" },
+    { value: "Realme Pad", label: "Realme Pad" },
+    { value: "Samsung Galaxy Tab", label: "Samsung Galaxy Tab" },
+    { value: "OPPO Pad", label: "OPPO Pad" },
+    { value: "Lenovo", label: "Lenovo" },
+    { value: "Xiaomi Redmi Pad", label: "Xiaomi Redmi Pad" },
   ],
+  accessory: [
+    { value: "", label: "Tất cả" },
+    { value: "Phụ kiện iPad", label: "Phụ kiện iPad" },
+    { value: "Phụ kiện khác", label: "Phụ kiện khác" },
+    { value: "Pin sạc dự phòng", label: "Pin sạc dự phòng" },
+    { value: "Thiết bị LiveStream", label: "Thiết bị LiveStream" },
+    { value: "Đồng hồ thông minh Xiaomi", label: "Đồng hồ thông minh Xiaomi" },
+    { value: "Dán màn, lưng Realme", label: "Dán màn, lưng Realme" },
+    { value: "Đồng hồ thông minh", label: "Đồng hồ thông minh" },
+    { value: "Đồ chơi công nghệ", label: "Đồ chơi công nghệ" },
+    { value: "Tai nghe Bluetooth - Loa", label: "Tai nghe Bluetooth - Loa" },
+    { value: "Phụ kiện Realme", label: "Phụ kiện Realme" },
+    { value: "Flycam", label: "Flycam" },
+    { value: "Ốp lưng Xiaomi", label: "Ốp lưng Xiaomi" },
+    { value: "Máy massage", label: "Máy massage" },
+    { value: "Ốp lưng Realme", label: "Ốp lưng Realme" },
+    { value: "Quạt tản nhiệt", label: "Quạt tản nhiệt" },
+    { value: "Phụ kiện iPhone", label: "Phụ kiện iPhone" },
+    { value: "Quạt tích điện", label: "Quạt tích điện" },
+    { value: "Dán màn, lưng Xiaomi", label: "Dán màn, lưng Xiaomi" },
+    { value: "Máy lọc không khí", label: "Máy lọc không khí" },
+    { value: "Phụ kiện Xiaomi", label: "Phụ kiện Xiaomi" },
+    { value: "Máy chiếu Mini", label: "Máy chiếu Mini" }
+  ]  
 };
 
 export default function SearchProducts() {
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [filters, setFilters] = useState({ type: "", category: "", minPrice: "", maxPrice: "" });
+  const [filters, setFilters] = useState({ type: "all", category: "all", minPrice: "", maxPrice: "" });
   const [sortConfig, setSortConfig] = useState({ field: "", direction: "" });
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -71,7 +100,7 @@ export default function SearchProducts() {
   };
 
   const clearFilters = () => {
-    setFilters({ type: "", category: "", minPrice: "", maxPrice: "" });
+    setFilters({ type: "all", category: "all", minPrice: "", maxPrice: "" });
     setSortConfig({ field: "", direction: "" });
 	setFilteredProducts(results); // Reset filteredProducts về results gốc
     setCurrentPage(1);
@@ -98,7 +127,7 @@ export default function SearchProducts() {
 
   const applyFilters = () => {
     let filtered = [...results];
-    if (filters.type) filtered = filtered.filter((p) => p.type === filters.type);
+    if (filters.type) filtered = filtered.filter((p) => filters.type === "all" || p.type === filters.type);
     if (filters.category) filtered = filtered.filter((p) => p.category === filters.category);
     if (filters.minPrice) filtered = filtered.filter((p) => Number(p.price) >= Number(filters.minPrice));
     if (filters.maxPrice) filtered = filtered.filter((p) => Number(p.price) <= Number(filters.maxPrice));
@@ -134,11 +163,6 @@ export default function SearchProducts() {
   useEffect(() => {
     search();
   }, []);
-
-
-
-
-
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -194,6 +218,7 @@ export default function SearchProducts() {
 
           <input
             type="number"
+            min="0"
             placeholder="Giá tối thiểu"
             className="p-2 border rounded-lg"
             value={filters.minPrice}
@@ -202,6 +227,7 @@ export default function SearchProducts() {
 
           <input
             type="number"
+            min="0"
             placeholder="Giá tối đa"
             className="p-2 border rounded-lg"
             value={filters.maxPrice}
@@ -221,13 +247,6 @@ export default function SearchProducts() {
             )}
             Sắp xếp theo giá
           </button>
-		  
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            onClick={applyFilters}
-          >
-            Áp dụng bộ lọc
-          </button>		  
 
           <button
             className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
@@ -253,7 +272,7 @@ export default function SearchProducts() {
               className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col"
             >
               <img
-                src={item.image_link}
+                src={item.image_link || "/no-image.png"}
                 alt={item.title}
                 className="w-full h-auto object-contain"
                 loading="lazy"

@@ -7,7 +7,9 @@ export default defineConfig({
     proxy: {
       '/db/search': 'http://localhost:8080',
     },
-    
+    watch: {
+      usePolling: true
+    }
   },
   plugins: [react()]
 })
