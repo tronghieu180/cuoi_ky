@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchProducts from './Component/SearchProducts'
+import Layout from './Component/Layout'
 import './App.css'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
 
-    <SearchProducts />
+    <Layout />
 
   )
 }

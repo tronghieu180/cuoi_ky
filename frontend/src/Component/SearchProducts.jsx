@@ -5,6 +5,48 @@ import { BsFilterLeft, BsSortUp, BsSortDown } from "react-icons/bs";
 const DB_API_URL = "http://localhost:8080/db";
 const ITEMS_PER_PAGE = 6;
 
+const typeOptions = [
+  { value: "", label: "Tất cả" },
+  { value: "phone", label: "Điện thoại" },
+  { value: "tablet", label: "Máy tính bảng" },
+];
+
+const categoryOptions = {
+  "": [{ value: "", label: "Tất cả" }],
+  phone: [
+    { value: "Điện thoại Cũ", label: "Điện thoại Cũ" },
+    { value: "Iphone Chính hãng VN/A", label: "Iphone Chính hãng VN/A" },
+    { value: "Iphone Cũ 99%", label: "Xiaomi" },
+	{ value: "Samsung Cũ", label: "Samsung Cũ" },
+	{ value: "Samsung Chính hãng", label: "Samsung Chính hãng" },
+	{ value: "Xiaomi", label: "Xiaomi" },
+	{ value: "POCO", label: "POCO" },
+	{ value: "Redmi", label: "Redmi" },
+	{ value: "Realme", label: "Realme" },
+	{ value: "Asus (ROG Phone)", label: "Asus (ROG Phone)" },
+	{ value: "OnePlus", label: "OnePlus" },
+	{ value: "Vivo", label: "Vivo" },
+	{ value: "Nokia", label: "Nokia" },
+	{ value: "LG", label: "LG" },
+	{ value: "Google", label: "Google" },
+	{ value: "OPPO", label: "OPPO" },
+	{ value: "Meizu", label: "Meizu" },
+	{ value: "Honor", label: "Honor" },
+	{ value: "Tecno", label: "Tecno" },
+	{ value: "Nubia Red Magic", label: "Nubia Red Magic" },
+	{ value: "Lenovo - Motorola", label: "Lenovo - Motorola" },
+  ],
+  tablet: [
+    { value: "iPad", label: "iPad" },
+	{ value: "Vivo Pad", label: "Vivo Pad" },
+	{ value: "Realme Pad", label: "Realme Pad" },
+	{ value: "Samsung Galaxy Tab", label: "Samsung Galaxy Tab" },
+	{ value: "OPPO Pad", label: "OPPO Pad" },
+	{ value: "Lenovo", label: "Lenovo" },
+	{ value: "Xiaomi Redmi Pad", label: "Xiaomi Redmi Pad" },
+  ],
+};
+
 export default function SearchProducts() {
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState([]);
@@ -31,7 +73,7 @@ export default function SearchProducts() {
   const clearFilters = () => {
     setFilters({ type: "", category: "", minPrice: "", maxPrice: "" });
     setSortConfig({ field: "", direction: "" });
-    setFilteredProducts(results); // Reset filteredProducts về results gốc
+	setFilteredProducts(results); // Reset filteredProducts về results gốc
     setCurrentPage(1);
   };
 
@@ -44,11 +86,11 @@ export default function SearchProducts() {
       if (!res.ok) throw new Error(`Error: ${res.status}`);
       const data = await res.json();
       setResults(data);
-      setFilteredProducts(data); // Hiển thị toàn bộ kết quả tìm kiếm ban đầu
+	    setFilteredProducts(data); // Hiển thị toàn bộ kết quả tìm kiếm ban đầu
     } catch (err) {
       setError(err.message || "Lỗi khi tìm kiếm");
       setResults([]);
-      setFilteredProducts([]);
+	    setFilteredProducts([]);
     } finally {
       setLoading(false);
     }
@@ -71,23 +113,32 @@ export default function SearchProducts() {
     setFilteredProducts(filtered);
     setCurrentPage(1);
   };
+  
+  useEffect(() => {
+    setFilters((prev) => ({ ...prev, category: "" }));
+  }, [filters.type]);
 
-  // Chỉ gọi applyFilters khi filters hoặc sortConfig thay đổi
+// Chỉ gọi applyFilters khi filters hoặc sortConfig thay đổi
   useEffect(() => {
     if (filters.type || filters.category || filters.minPrice || filters.maxPrice || sortConfig.field) {
       applyFilters();
     }
-  }, [filters, sortConfig]);
+  }, [results, filters, sortConfig]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    search();
+  };
 
   // Tìm kiếm lần đầu khi component được mount
   useEffect(() => {
     search();
   }, []);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    search();
-  };
+
+
+
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -117,24 +168,28 @@ export default function SearchProducts() {
       <div className={`${isFilterOpen ? "block" : "hidden md:block"}`}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <select
-            className="p-2 border rounded-lg"
+            className="p-2 border rounded-lg custom-select"
             value={filters.type}
             onChange={(e) => setFilters({ ...filters, type: e.target.value })}
           >
-            <option value="">Tất cả loại</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Furniture">Furniture</option>
+            {typeOptions.map((option) => (
+				<option key={option.value} value={option.value}>
+					{option.label}
+				</option>
+			))}
           </select>
 
           <select
-            className="p-2 border rounded-lg"
+            className="p-2 border rounded-lg custom-select"
             value={filters.category}
             onChange={(e) => setFilters({ ...filters, category: e.target.value })}
           >
-            <option value="">Tất cả danh mục</option>
-            <option value="Audio">Audio</option>
-            <option value="Office">Office</option>
-            <option value="Wearables">Wearables</option>
+            {categoryOptions[filters.type] &&
+				categoryOptions[filters.type].map((option) => (
+					<option key={option.value} value={option.value}>
+						{option.label}
+					</option>
+			))}
           </select>
 
           <input
@@ -166,13 +221,13 @@ export default function SearchProducts() {
             )}
             Sắp xếp theo giá
           </button>
-
+		  
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
             onClick={applyFilters}
           >
             Áp dụng bộ lọc
-          </button>
+          </button>		  
 
           <button
             className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
@@ -195,7 +250,7 @@ export default function SearchProducts() {
           {paginatedProducts.map((item) => (
             <div
               key={item.id}
-              className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col"
             >
               <img
                 src={item.image_link}
@@ -203,23 +258,29 @@ export default function SearchProducts() {
                 className="w-full h-auto object-contain"
                 loading="lazy"
               />
-              <div className="p-4">
+              <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
                 <div className="flex justify-between text-sm text-gray-600">
-                  <span>{item.type === "phone" ? "Điện thoại" :
-                    item.type === "tablet" ? "Máy tính bảng" :
-                      item.type === "accessory" ? "Phụ kiện" :
-                        item.type
-                  }</span>
                   <span>{item.category}</span>
                 </div>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="text-green-600 font-bold">{Number(item.price).toLocaleString("vi-VN")} VNĐ</span>
+
+
+                <div className="flex justify-between items-center mt-auto pt-4">
+                  {item.price && Number(item.price) > 0 ? (
+                    <span className="text-green-600 font-bold">
+                      {Number(item.price).toLocaleString("vi-VN")} VNĐ
+                    </span>
+                  ) : (
+                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:text-green-500 hover:bg-white border hover:border-green-600">
+                      Liên hệ
+                    </button>
+                  )}
+
                   <a
                     href={item.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-500 underline"
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:text-green-500 hover:bg-white border hover:border-green-600"
                   >
                     Chi tiết
                   </a>
@@ -228,6 +289,7 @@ export default function SearchProducts() {
             </div>
           ))}
         </div>
+
       )}
 
       {totalPages > 1 && (
@@ -245,7 +307,7 @@ export default function SearchProducts() {
               disabled={currentPage === 1}
             >
               <FiChevronLeft />
-            </button>
+            </button >
 
             {[...Array(totalPages)].map((_, i) => i + 1)
               .filter((page) => {
@@ -270,7 +332,7 @@ export default function SearchProducts() {
                 ) : (
                   <button
                     key={item}
-                    className={`rounded-lg text-center   ${currentPage === item
+                    className={`p-2 rounded-lg text-center   ${currentPage === item
                       ? "bg-blue-500 text-white"
                       : "bg-gray-100 hover:bg-gray-200"
                       }`}
